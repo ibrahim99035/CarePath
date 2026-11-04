@@ -22,7 +22,7 @@ components/   client views and shared UI
 lib/          pure logic: decision, facilities, geo, geofence, hooks
 data/         bundled facilities + decision tree
 public/       boundary GeoJSON, fonts, icons, manifest
-scripts/      data sync, boundary build, service worker generation
+scripts/      data sync, boundary build, service worker generation, preview server
 docs/         full architecture handoff
 ```
 
@@ -41,6 +41,8 @@ npm run build:geo
 npm run build
 npm run preview
 ```
+
+`npm run dev` has no service worker by design. Offline testing requires `npm run build && npm run preview` on `localhost` or HTTPS.
 
 ## Non-negotiables
 

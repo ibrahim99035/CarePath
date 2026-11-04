@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && node scripts/generate-sw.js",
-    "start": "npx serve@latest out",
-    "preview": "npx serve@latest out",
+    "start": "node scripts/serve-out.mjs",
+    "preview": "node scripts/serve-out.mjs",
     "sync:data": "node scripts/sync-facilities.mjs",
     "build:geo": "node scripts/build-geo.mjs"
   },

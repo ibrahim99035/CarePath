@@ -257,7 +257,8 @@ CarePath/
 ├── scripts/
 │   ├── sync-facilities.mjs       # Master dataset → data/ + public/data/
 │   ├── build-geo.mjs             # geoBoundaries download/filter/validate
-│   └── generate-sw.js            # out/ → precache service worker
+│   ├── generate-sw.js            # out/ → precache service worker
+│   └── serve-out.mjs             # zero-dependency production preview server
 │
 ├── next.config.mjs
 ├── jsconfig.json                 # "@/*" alias
@@ -1004,9 +1005,11 @@ Fetch:
 
 `ServiceWorkerRegister.js`:
 
-- Only runs when `NODE_ENV === "production"`.
+- Only registers when `NODE_ENV === "production"`.
+- Logs a development-only console note explaining that `npm run dev` has no service worker.
+- Checks for service-worker support and a secure context (`localhost` or HTTPS).
 - Registers `/sw.js` after `window.load`.
-- Swallows registration errors.
+- Logs a clear console warning if registration fails instead of failing silently.
 
 ---
 
@@ -1054,6 +1057,33 @@ Fetch:
 - icons
 - theme color
 - `formatDetection: { telephone: true }`
+
+### Verifying offline mode
+
+Offline support is production-only:
+
+```bash
+npm run build
+npm run preview   # zero-dependency Node server, no npx/network needed
+```
+
+Open `http://localhost:3000`, wait for the first load, then check DevTools:
+
+- **Application → Service Workers**: `sw.js` activated and running.
+- **Application → Cache Storage**: `carepath-*` with 83 entries.
+- **Network → Offline**: reload `/`, `/facility/?id=FAY-0001`, `/result/?level=primary&specialty=family`, `/map/`, `/emergency/`.
+
+This was verified with a fresh browser context and also with the preview server stopped: the cached app shell and facility details still load, and the boundary/markers render without tiles.
+
+Common false negatives:
+
+- `npm run dev` does not register a service worker.
+- `http://192.168.x.x` is not a secure context; use `localhost` or HTTPS.
+- The 83-URL precache must finish installing after the first load.
+- Service-worker registrations and caches are per origin (host + port).
+- Some private/incognito modes disable service workers.
+- Subpath deployments need a matching `basePath`; the app currently assumes root-absolute URLs.
+- OSM tiles are online-only by design; a blank basemap offline is expected.
 
 ### Current build output
 
@@ -1171,7 +1201,7 @@ npm run dev          # next dev
 npm run sync:data    # master dataset → data/ + public/data/
 npm run build:geo    # download/build Fayoum boundary
 npm run build        # next build + generate-sw.js
-npm run preview      # npx serve@latest out
+npm run preview      # node scripts/serve-out.mjs (no npx/network needed)
 npm start            # same as preview
 ```
 

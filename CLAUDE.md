@@ -22,8 +22,10 @@ npm run dev
 npm run sync:data    # master dataset -> data/ + public/data/
 npm run build:geo    # needs network; boundary + coordinator validation
 npm run build        # next build + service worker
-npm run preview      # npx serve out
+npm run preview      # zero-dependency local server for out/
 ```
+
+`npm run dev` intentionally has no service worker. Test offline with `npm run build && npm run preview` on `localhost` or HTTPS; plain HTTP on a LAN IP is not a secure context.
 
 ## Critical invariants
 
@@ -53,6 +55,7 @@ npm run preview      # npx serve out
 - `data/facilities.json` — 140 bundled records
 - `data/decision-tree.json` — runtime source of truth
 - `scripts/sync-facilities.mjs`, `scripts/build-geo.mjs`, `scripts/generate-sw.js`
+- `scripts/serve-out.mjs` — zero-dependency preview server for offline testing
 
 ## Current data facts
 

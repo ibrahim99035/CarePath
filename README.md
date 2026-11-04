@@ -23,9 +23,11 @@ npm run dev          # http://localhost:3000
 Production build (static export + generated service worker):
 
 ```bash
-npm run build        # writes out/
-npm run preview      # serves out/ locally
+npm run build        # writes out/ and out/sw.js
+npm run preview      # serves out/ locally, no network needed
 ```
+
+`npm run dev` intentionally does **not** register the service worker. Use the production preview above to test offline mode.
 
 Deploy the `out/` directory to any static host (Netlify, Vercel, GitHub Pages, Cloudflare Pages). No server runtime is required.
 
@@ -140,6 +142,35 @@ Does **not** work offline:
 
 If a new build is deployed, the service worker cache name changes and the old cache is removed on activation.
 
+### Testing offline mode
+
+Offline mode only exists in a production build. `npm run dev` uses Next's development server and deliberately does not register a service worker, because a dev service worker would cache development chunks and break hot reload.
+
+```bash
+npm run build
+npm run preview
+```
+
+Then:
+
+1. Open `http://localhost:3000` and wait for the first load to finish.
+2. Check **DevTools → Application → Service Workers**: `sw.js` should be **activated and running**.
+3. Check **DevTools → Application → Cache Storage**: there should be a `carepath-*` cache with **83 entries**.
+4. Switch **DevTools → Network → Offline** (or stop the preview server), then reload.
+5. Verify `/`, `/facility/?id=FAY-0001`, `/result/?level=primary&specialty=family`, `/map/`, and `/emergency/`.
+
+The app shell, facility data/details, decision tree, boundary vectors, emergency content, fonts, and `tel:` links work offline. OpenStreetMap tiles do not; the vector map still renders with a fallback notice.
+
+Common reasons offline appears broken:
+
+- **Testing with `npm run dev`** — no service worker is registered by design.
+- **Testing over `http://192.168.x.x`** — service workers require a secure context. Use `localhost` or HTTPS.
+- **Testing before the first install finishes** — the 83-URL precache must complete.
+- **Changing host or port** — service-worker registrations and caches are per origin.
+- **Private/incognito browsing** — some browsers disable service workers.
+- **Hosting under a subpath** (for example a GitHub Pages project site at `/CarePath/`) — the app currently uses root-absolute `/sw.js`, `/_next/...`, and `/data/...` URLs. Add a matching Next `basePath` before deploying to a subpath.
+- **Blank basemap** — expected offline; tiles are online-only, but boundaries, markers, and facility details still work.
+
 ## Project structure
 
 ```text
@@ -152,6 +183,7 @@ CarePath/
 ├── scripts/
 │   ├── build-geo.mjs         # geoBoundaries → Fayoum boundary layers
 │   ├── generate-sw.js        # post-build service worker generator
+│   ├── serve-out.mjs         # zero-dependency preview server for out/
 │   └── sync-facilities.mjs   # master CSV/JSON → client JSON
 ├── next.config.mjs           # output: "export", trailingSlash: true
 └── package.json
