@@ -1,0 +1,359 @@
+{
+ "version": "1.0.0",
+ "updated": "2026-11-03",
+ "questions": [
+  {
+   "id": "age",
+   "title": "من يحتاج الرعاية؟",
+   "subtitle": "اختر الفئة العمرية",
+   "options": [
+    {
+     "id": "infant",
+     "label": "طفل أقل من 5 سنوات",
+     "icon": "👶"
+    },
+    {
+     "id": "child",
+     "label": "طفل من 5 إلى 12 سنة",
+     "icon": "🧒"
+    },
+    {
+     "id": "adult",
+     "label": "بالغ من 13 إلى 64 سنة",
+     "icon": "🧑"
+    },
+    {
+     "id": "elderly",
+     "label": "مسن 65 سنة أو أكثر",
+     "icon": "🧓"
+    }
+   ]
+  },
+  {
+   "id": "complaint",
+   "title": "ما هي الشكوى الرئيسية؟",
+   "subtitle": "اختر ما يصف الحالة أكثر",
+   "columns": 2,
+   "options": [
+    {
+     "id": "fever",
+     "label": "حمى أو التهاب",
+     "icon": "🌡️"
+    },
+    {
+     "id": "breathing",
+     "label": "صعوبة في التنفس",
+     "icon": "😮‍💨"
+    },
+    {
+     "id": "chest",
+     "label": "ألم في الصدر",
+     "icon": "💔"
+    },
+    {
+     "id": "diarrhea",
+     "label": "إسهال أو قيء",
+     "icon": "🤢"
+    },
+    {
+     "id": "injury",
+     "label": "إصابة أو جرح",
+     "icon": "🩹"
+    },
+    {
+     "id": "pregnancy",
+     "label": "حمل أو ولادة",
+     "icon": "🤰",
+     "available_for": {
+      "age": [
+       "adult",
+       "elderly"
+      ]
+     }
+    },
+    {
+     "id": "dental",
+     "label": "ألم في الأسنان",
+     "icon": "🦷"
+    },
+    {
+     "id": "skin",
+     "label": "مشكلة جلدية",
+     "icon": "🧴"
+    },
+    {
+     "id": "chronic",
+     "label": "متابعة مرض مزمن",
+     "icon": "💊"
+    },
+    {
+     "id": "other",
+     "label": "شكوى أخرى",
+     "icon": "➕"
+    }
+   ]
+  },
+  {
+   "id": "danger",
+   "title": "هل توجد أي من هذه العلامات الخطرة؟",
+   "subtitle": "إذا وجدت علامة واحدة، اخترها فوراً",
+   "columns": 1,
+   "options": [
+    {
+     "id": "severe_breathing",
+     "label": "صعوبة شديدة في التنفس أو ازرقاق الشفاه",
+     "icon": "🚨",
+     "danger": true
+    },
+    {
+     "id": "unconscious",
+     "label": "فقدان وعي أو تشنج",
+     "icon": "🚨",
+     "danger": true
+    },
+    {
+     "id": "severe_bleeding",
+     "label": "نزيف شديد لا يتوقف",
+     "icon": "🩸",
+     "danger": true
+    },
+    {
+     "id": "severe_chest",
+     "label": "ألم شديد في الصدر أو ضيق مفاجئ",
+     "icon": "💔",
+     "danger": true
+    },
+    {
+     "id": "stiff_neck",
+     "label": "تصلب في الرقبة مع حمى شديدة",
+     "icon": "🌡️",
+     "danger": true
+    },
+    {
+     "id": "dehydration",
+     "label": "جفاف شديد أو خمول مع قلة التبول",
+     "icon": "💧",
+     "danger": true
+    },
+    {
+     "id": "none",
+     "label": "لا توجد أي من هذه العلامات",
+     "icon": "✅",
+     "danger": false
+    }
+   ]
+  },
+  {
+   "id": "specialty",
+   "title": "ما نوع الرعاية الأنسب لك؟",
+   "subtitle": "اختر التخصص الأقرب لاحتياجك",
+   "columns": 2,
+   "options": [
+    {
+     "id": "family",
+     "label": "طبيب عام / طب أسرة",
+     "icon": "🩺"
+    },
+    {
+     "id": "pediatrics",
+     "label": "طبيب أطفال",
+     "icon": "🧒"
+    },
+    {
+     "id": "womens",
+     "label": "نساء وتوليد",
+     "icon": "🤰",
+     "available_for": {
+      "age": [
+       "adult",
+       "elderly"
+      ]
+     }
+    },
+    {
+     "id": "internal",
+     "label": "باطنة",
+     "icon": "🫀"
+    },
+    {
+     "id": "dental",
+     "label": "أسنان",
+     "icon": "🦷"
+    },
+    {
+     "id": "eye",
+     "label": "عيون",
+     "icon": "👁️"
+    }
+   ]
+  }
+ ],
+ "care_levels": {
+  "emergency": {
+   "title": "حالة طارئة",
+   "subtitle": "تحتاج تدخلاً طبياً فورياً",
+   "message": "اتصل بالإسعاف على 123 أو توجه فوراً إلى أقرب مستشفى به قسم طوارئ. لا تنتظر.",
+   "color": "emergency",
+   "icon": "🚨",
+   "limit": 6,
+   "facility_filter": {
+    "types": [
+     "مستشفى عام",
+     "مستشفى تأمين صحي",
+     "مستشفى أطفال",
+     "مستشفى تخصصي"
+    ],
+    "emergency_only": true
+   }
+  },
+  "urgent": {
+   "title": "رعاية عاجلة",
+   "subtitle": "يُفضّل التوجه اليوم",
+   "message": "حالتك تحتاج تقييماً طبياً في نفس اليوم. توجه إلى أقرب مستشفى أو مركز طبي.",
+   "color": "urgent",
+   "icon": "⏰",
+   "limit": 6,
+   "facility_filter": {
+    "types": [
+     "مستشفى عام",
+     "مستشفى تأمين صحي",
+     "مستشفى أطفال",
+     "مستشفى تخصصي",
+     "مركز طبي حضري"
+    ],
+    "emergency_only": false
+   }
+  },
+  "specialty": {
+   "title": "رعاية تخصصية",
+   "subtitle": "كشف عند تخصص معين",
+   "message": "تحتاج كشفاً عند تخصص معين. اختر أقرب مستشفى أو مركز يقدم هذه الخدمة.",
+   "color": "specialty",
+   "icon": "🩺",
+   "limit": 6,
+   "match_services": true,
+   "facility_filter": {
+    "types": [
+     "مستشفى عام",
+     "مستشفى تأمين صحي",
+     "مستشفى أطفال",
+     "مستشفى تخصصي",
+     "مركز طبي حضري"
+    ],
+    "emergency_only": false
+   }
+  },
+  "primary": {
+   "title": "رعاية أساسية",
+   "subtitle": "ابدأ من أقرب وحدة صحية",
+   "message": "يمكن البدء من وحدة الرعاية الأساسية أو مركز طب الأسرة الأقرب إليك. إذا لم تتحسن الحالة، توجه إلى مستشفى.",
+   "color": "primary",
+   "icon": "🏥",
+   "limit": 6,
+   "facility_filter": {
+    "types": [
+     "وحدة رعاية أساسية / طب أسرة",
+     "مركز طبي حضري"
+    ],
+    "emergency_only": false
+   }
+  }
+ },
+ "specialties": {
+  "family": {
+   "label": "طب عام / طب أسرة",
+   "service_keywords": [
+    "طب الأسرة",
+    "عيادات خارجية",
+    "باطنة"
+   ]
+  },
+  "pediatrics": {
+   "label": "أطفال",
+   "service_keywords": [
+    "أطفال"
+   ]
+  },
+  "womens": {
+   "label": "نساء وتوليد",
+   "service_keywords": [
+    "نساء وتوليد",
+    "توليد"
+   ]
+  },
+  "internal": {
+   "label": "باطنة",
+   "service_keywords": [
+    "باطنة"
+   ]
+  },
+  "dental": {
+   "label": "أسنان",
+   "service_keywords": [
+    "أسنان",
+    "أسنان"
+   ]
+  },
+  "eye": {
+   "label": "عيون",
+   "service_keywords": [
+    "عيون",
+    "رمد"
+   ]
+  }
+ },
+ "routing_rules": [
+  {
+   "when": {
+    "danger": "any"
+   },
+   "level": "emergency"
+  },
+  {
+   "when": {
+    "complaint": [
+     "breathing",
+     "chest"
+    ]
+   },
+   "level": "urgent"
+  },
+  {
+   "when": {
+    "age": [
+     "infant",
+     "elderly"
+    ],
+    "complaint": [
+     "fever",
+     "diarrhea"
+    ]
+   },
+   "level": "urgent"
+  },
+  {
+   "when": {
+    "complaint": [
+     "pregnancy"
+    ]
+   },
+   "level": "specialty",
+   "specialty": "womens"
+  },
+  {
+   "when": {
+    "specialty": [
+     "dental",
+     "eye",
+     "womens",
+     "pediatrics",
+     "internal"
+    ]
+   },
+   "level": "specialty"
+  },
+  {
+   "default": "primary"
+  }
+ ]
+}

@@ -1,0 +1,33 @@
+{
+  "name": "carepath",
+  "version": "1.0.0",
+  "description": "CarePath / دليلتي الصحية — offline-first Arabic health navigation PWA for Fayoum",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && node scripts/generate-sw.js",
+    "start": "npx serve@latest out",
+    "preview": "npx serve@latest out",
+    "sync:data": "node scripts/sync-facilities.mjs",
+    "build:geo": "node scripts/build-geo.mjs"
+  },
+  "keywords": [
+    "pwa",
+    "health",
+    "fayoum",
+    "arabic",
+    "offline"
+  ],
+  "author": "",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20.9"
+  },
+  "dependencies": {
+    "leaflet": "^1.9.4",
+    "next": "^16.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "private": true
+}
